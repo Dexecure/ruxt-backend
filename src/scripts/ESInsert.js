@@ -47,7 +47,8 @@ function prepareResult(rows) {
   const items = [];
   console.log(`received ${rows.length} rows`);
   rows.forEach(row => {
-    let origin = row["origin"];
+    // let origin = row["origin"];
+    let origin = row;
     items.push(
       { index: { _index: "origin-index", _type: "all", _id: origin } },
       { origin }
@@ -78,8 +79,7 @@ async function insertIntoESPromise(items) {
 
 async function insertIntoES(rows) {
   const batchSize = 10000;
-  console.log(rows.length);
-  for (let i = 2940000; i <= rows.length; i = i + batchSize) {
+  for (let i = 0; i <= rows.length; i = i + batchSize) {
     console.log(`inserting from ${i} to ${i + batchSize}`);
     await insertIntoESPromise(rows.slice(i, i + batchSize));
   }
@@ -101,7 +101,6 @@ function writeOrigins(rows) {
 async function run() {
   const fs = require("fs");
   const rows = JSON.parse(fs.readFileSync("origins.txt"));
-  console.log(rows.length);
   await insertIntoES(prepareResult(rows));
 }
 

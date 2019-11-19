@@ -29,7 +29,7 @@ Retuns all origins matching the query present in the current dataset.
 ## POST /content
 
 {
-"origin": "https://www.google.com",
+"origin": "https://www.google.com.sg",
 "connection": "3G",
 "device": "phone",
 "country": "all
@@ -83,6 +83,12 @@ To run in development mode
 ```bash
 docker-compose up # in one terminal
 npm install # in another terminal
+
+# add temp data into local ES cluster
+cd scripts;
+node ESInsert.js
+cd ..
+
 npm run watch
 ```
 
