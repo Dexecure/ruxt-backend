@@ -1,11 +1,14 @@
 RUXT Dashboard Backend
 
 # API
-## POST /search  
+
+## POST /search
+
 { "origin": "google" }  
-Retuns all origins matching the query present in the current dataset. 
+Retuns all origins matching the query present in the current dataset.
 
 ### Result
+
 ```
 [
     {
@@ -24,14 +27,18 @@ Retuns all origins matching the query present in the current dataset.
 ```
 
 ## POST /content
-{ 
-    "origin": "https://www.google.com",
-    "connection": "3G",
-    "device": "phone"
+
+{
+"origin": "https://www.google.com",
+"connection": "3G",
+"device": "phone",
+"country": "all
 }
 
 Returns the probability of First Contentful Paint and onload finishing before 1sec, 2sec ... 10 sec
+
 ### Result
+
 ```
 {
     "bam": {
@@ -63,10 +70,10 @@ Returns the probability of First Contentful Paint and onload finishing before 1s
 }
 ```
 
+To run, you would need [node](https://nodejs.org/en/) and [Docker](http://docker.io/) installed.
 
-To run, you would need [node](https://nodejs.org/en/) and [Docker](http://docker.io/) installed. 
+Download your google credentials and point to it, see - https://cloud.google.com/docs/authentication/getting-started
 
-Download your google credentials and point to it, see -  https://cloud.google.com/docs/authentication/getting-started
 ```
 export GOOGLE_APPLICATION_CREDENTIALS=/path/to/the/json/file
 ```
@@ -80,6 +87,7 @@ npm run watch
 ```
 
 To start in production mode (set env variables properly)
+
 ```bash
 export NODE_ENV=production
 export GOOGLE_APPLICATION_CREDENTIALS=~/crux-dashboard-backend/crux-gcloud.json

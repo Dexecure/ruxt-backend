@@ -1,30 +1,33 @@
-import { TYPES } from '../types';
-import { inject, injectable } from 'inversify';
-import { IRequestFormat } from '../interfaces';
-import * as countrynames from 'countrynames';
-import { IEnviroment } from '../env';
+import * as countrynames from "countrynames";
+import { inject, injectable } from "inversify";
+import { IEnviroment } from "../env";
+import { IRequestFormat } from "../interfaces";
+import { TYPES } from "../types";
 
 @injectable()
 export class BigQueryTransformerService {
-    datasetName;
+  datasetName;
 
-    constructor(@inject(TYPES.Environment) env:IEnviroment) {
-      const { BigQueryDataset } = env;
-	  this.datasetName = BigQueryDataset;
+  constructor(@inject(TYPES.Environment) env: IEnviroment) {
+    const { BigQueryDataset } = env;
+    this.datasetName = BigQueryDataset;
+  }
+
+  public generateSql(requestObject: IRequestFormat) {
+    const countryName: string = requestObject.country;
+    let datasetToQuery: string = "";
+    if (countryName === "all") {
+      let countryAlpha2Name = countryName.toUpperCase();
+      datasetToQuery = this.datasetName;
+    } else {
+      let countryAlpha2Name = countrynames.getCode(countryName);
+      datasetToQuery = this.datasetName.replace(
+        "all",
+        `country_${countryAlpha2Name.toLowerCase()}`
+      );
     }
 
-    public generateSql(requestObject:IRequestFormat) {
-		const countryName: string = requestObject.country;
-		let datasetToQuery: string = '';
-		if(countryName === 'all') {
-			let countryAlpha2Name = countryName.toUpperCase();
-			datasetToQuery = this.datasetName;
-		} else {
-			let countryAlpha2Name = countrynames.getCode(countryName);
-			datasetToQuery = this.datasetName.replace('all', `country_${countryAlpha2Name.toLowerCase()}`);
-		}
-		
-		let query = `SELECT
+    let query = `SELECT
 			'${countryName}' as country,
 			origin,
 			ROUND(SUM(IF(fcp.END <= 1000,
@@ -93,12 +96,22 @@ export class BigQueryTransformerService {
 			UNNEST(onload.histogram.bin) AS onload
 		WHERE
 			origin IN ('${requestObject.origin}')
-			${requestObject.connection !== "all" ? 'AND effective_connection_type.name = "' + requestObject.connection + '"': ''}
-			${requestObject.device !== "all" ? 'AND form_factor.name = "' + requestObject.device + '"' : ''}
+			${
+        requestObject.connection !== "all"
+          ? 'AND effective_connection_type.name = "' +
+            requestObject.connection +
+            '"'
+          : ""
+      }
+			${
+        requestObject.device !== "all"
+          ? 'AND form_factor.name = "' + requestObject.device + '"'
+          : ""
+      }
 		GROUP BY
 			origin
 		`;
 
-		return query;
-    }
+    return query;
+  }
 }

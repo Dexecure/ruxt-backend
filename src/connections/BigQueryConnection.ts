@@ -1,15 +1,14 @@
-import * as BigQuery from '@google-cloud/bigquery';
-
-import { TYPES } from '../types';
-import { inject, injectable } from 'inversify';
-import { IEnviroment } from '../env';
+import { BigQuery } from "@google-cloud/bigquery";
+import { inject, injectable } from "inversify";
+import { IEnviroment } from "../env";
+import { TYPES } from "../types";
 
 @injectable()
 export class BigQueryConnection {
-    public bgClient;
+  public bgClient;
 
-    constructor(@inject(TYPES.Environment) env:IEnviroment) {
-        const { BigQueryProjectId } = env;
-        this.bgClient = new BigQuery();
-    }
+  constructor(@inject(TYPES.Environment) env: IEnviroment) {
+    const { BigQueryProjectId } = env;
+    this.bgClient = new BigQuery();
+  }
 }

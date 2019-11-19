@@ -1,8 +1,6 @@
-import { TYPES } from '../types';
-import { inject, injectable } from 'inversify';
-import { ElasticSearchClient } from '../clients/ElasticSearchClient';
+import { injectable } from "inversify";
 
 @injectable()
 export class Utils {
-    constructor() {}
+  constructor() {}
 }
