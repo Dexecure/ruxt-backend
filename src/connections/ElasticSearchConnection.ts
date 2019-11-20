@@ -17,7 +17,8 @@ export class ElasticSearchConnection {
         connectionClass: require("http-aws-es"),
         awsConfig: new AWS.Config({ region: "us-east-1" }), // set an aws config e.g. for multiple clients to different regions
         httpOptions: {}, // set httpOptions on aws-sdk's request. default to aws-sdk's config.httpOptions
-        log: "error"
+        log: "error",
+        apiVersion: "6.8"
       };
       this.esClient = require("elasticsearch").Client(options);
     } else {
