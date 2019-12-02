@@ -50,7 +50,10 @@ function prepareResult(rows) {
   rows.forEach(row => {
     // let origin = row["origin"];
     let origin = row;
-    items.push({ index: { _index: "origin-index", _id: origin } }, { origin });
+    items.push(
+      { index: { _index: "origin-index", _type: "all", _id: origin } },
+      { origin }
+    );
   });
   return items;
 }
