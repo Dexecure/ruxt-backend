@@ -69,13 +69,13 @@ export class ContentController implements IController {
       const doesOriginExist = await this.elasticSearchClient.searchExactOrigin(
         req.body.origin
       );
-      // const doesOriginExist = true;
       if (!doesOriginExist) {
         console.log(`origin does not exist ${req.body.origin}`);
         res.status(400).send({
           message: "origin does not exist"
         });
       } else if (!results) {
+        // } else if (true) {
         try {
           const newData = await this.bigQueryCalculatorService.getData(
             requestObject
@@ -86,8 +86,6 @@ export class ContentController implements IController {
           try {
             // Adding the content
             await this.redisClient.addDocument(documentID, newData);
-            // Adding the origin
-            await this.elasticSearchClient.addOrigin(requestObject.origin);
           } catch (e) {
             console.log("Failed to cache", e);
           }
