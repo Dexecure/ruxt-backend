@@ -24,7 +24,7 @@ export class BigQueryCalculatorService {
   private async getResults(requestObject: IRequestFormat) {
     const QueryStatements = [];
     const query = this.bigQueryTransformerService.generateSql(requestObject);
-    console.log("Querying...");
+    console.log("Querying...", query);
     const [[data]] = await this.bigQueryClient.doQuery(query);
     console.log(data);
     if (!data) {
