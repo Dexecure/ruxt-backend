@@ -17,7 +17,6 @@ export class BigQueryTransformerService {
     const countryName: string = requestObject.country;
     let datasetToQuery: string = "";
     if (countryName === "all") {
-      let countryAlpha2Name = countryName.toUpperCase();
       datasetToQuery = this.datasetName;
     } else {
       let countryAlpha2Name = countrynames.getCode(countryName);
