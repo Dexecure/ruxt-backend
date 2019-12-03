@@ -1,7 +1,7 @@
 const AWS = require("aws-sdk");
-const BigQuery = require("@google-cloud/bigquery");
+const { BigQuery } = require("@google-cloud/bigquery");
 
-const { ESHost, datasetName } = require("./env.js");
+const { ESHost, dataSetName, BigQueryProjectId } = require("./env.js");
 
 const esOptions = {
   hosts: [ESHost],
@@ -16,14 +16,14 @@ const items = [];
 
 // Creates a client
 const bigquery = new BigQuery({
-  projectId
+  projectId: BigQueryProjectId
 });
 
 const sqlQuery = `
 SELECT
   DISTINCT origin
 FROM
-  \`${datasetName}\`
+  \`${dataSetName}\`
 where LENGTH(origin) < 10
 `; // length used as a crude way of splitting the query, mod(length) would be better
 
