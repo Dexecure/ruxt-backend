@@ -25,7 +25,7 @@ export class BigQueryCalculatorService {
     const QueryStatements = [];
     const query = this.bigQueryTransformerService.generateSql(requestObject);
     console.log("Querying...");
-    const data = (await this.bigQueryClient.doQuery(query))[0];
+    const [[data]] = await this.bigQueryClient.doQuery(query);
     console.log(data);
     if (!data) {
       return [null, null];
@@ -43,6 +43,7 @@ export class BigQueryCalculatorService {
   }
 
   async getData(requestObject: IRequestFormat): Promise<any> {
+    // if (true) {
     if (this.env.environment === "production") {
       const [fcpProbabilities, onloadProbabilites] = await this.getResults(
         requestObject

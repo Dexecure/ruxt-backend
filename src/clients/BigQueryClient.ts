@@ -1,5 +1,4 @@
 import { inject, injectable } from "inversify";
-import { promisify } from "util";
 import { BigQueryConnection } from "../connections/BigQueryConnection";
 import { TYPES } from "../types";
 
@@ -14,11 +13,6 @@ export class BigQueryClient {
   }
 
   doQuery(query: string): Promise<any> {
-    // Uncomment this line for actual querying
-    return promisify(
-      this.bigQueryConnection.bgClient.query.bind(
-        this.bigQueryConnection.bgClient
-      )
-    )({ query });
+    return this.bigQueryConnection.bgClient.query(query);
   }
 }
