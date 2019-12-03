@@ -6,7 +6,7 @@ const options = {
   hosts: [ESHost],
   connectionClass: require("http-aws-es"),
   awsConfig: new AWS.Config({ region: "us-east-1" }),
-  apiVersion: "6.8"
+  apiVersion: "7.4"
 };
 const client = require("elasticsearch").Client(options);
 
