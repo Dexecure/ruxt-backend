@@ -22,8 +22,8 @@ export const env: IEnviroment = {
   RedisPort: isNaN(parseInt(process.env.REDIS_PORT))
     ? 6379
     : parseInt(process.env.REDIS_PORT),
-  BigQueryProjectId: process.env.PROJECT_ID || "chrome-ux-report-185710",
-  BigQueryDataset: "chrome-ux-report.all.201802",
+  BigQueryProjectId: process.env.PROJECT_ID || "chrome-ux-report-260908",
+  BigQueryDataset: "chrome-ux-report.all.201910",
   BaseUri: process.env.BASE_URI || null,
   OriginCount: isNaN(parseInt(process.env.ORIGIN_COUNT))
     ? 10000
