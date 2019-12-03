@@ -1,4 +1,4 @@
-import * as countrynames from "countrynames";
+import { getAlpha2Code } from "i18n-iso-countries";
 import { inject, injectable } from "inversify";
 import { IEnviroment } from "../env";
 import { IRequestFormat } from "../interfaces";
@@ -19,7 +19,7 @@ export class BigQueryTransformerService {
     if (countryName === "all") {
       datasetToQuery = this.datasetName;
     } else {
-      let countryAlpha2Name = countrynames.getCode(countryName);
+      let countryAlpha2Name = getAlpha2Code(countryName, "en");
       datasetToQuery = this.datasetName.replace(
         "all",
         `country_${countryAlpha2Name.toLowerCase()}`
